@@ -29,6 +29,10 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
+import time
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import selectionsort as ses
+from DISClib.Algorithms.Sorting import shellsort as shs
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -36,13 +40,54 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog(tipo):
+   
+    catalog = {'videos': lt.newList(tipo)
+               }
+
+    
+    
+
+    return catalog
+
 
 # Funciones para agregar informacion al catalogo
+def addVideo(catalog, video):
+    
+    lt.addLast(catalog['videos'], video)
+    
+
+    
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
+def sortVideos(catalog, size, algorithm):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    
 
+    if algorithm == 'Insertion sort':
+        start_time = time.process_time()
+        ins.sort(sub_list, cmpVideosbyViews)
+        stop_time = time.process_time()
+
+    elif algorithm == 'Selection sort':
+        start_time = time.process_time()
+        ses.sort(sub_list, cmpVideosbyViews)
+        stop_time = time.process_time()
+
+    elif algorithm == 'Shell sort':
+        start_time = time.process_time()
+        shs.sort(sub_list, cmpVideosbyViews)
+        stop_time = time.process_time()
+    
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+def cmpVideosbyViews(video1,video2):
+    return(video1["views"]<video2["views"])
+
+
